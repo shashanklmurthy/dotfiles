@@ -99,24 +99,57 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ZSH_THEME="spaceship"
-SPACESHIP_CHAR_SYMBOL="❯"
+SPACESHIP_CHAR_SYMBOL="❯❯"
 SPACESHIP_PACKAGE_SHOW=false
 SPACESHIP_BATTERY_SHOW='always'
-# --- Plugins
-
-plugins=(git dnf kubectl history emoji encode64 jsontools history dirhistory copybuffer copyfile web-search sudo zsh-syntax-highlighting zsh-autosuggestions)
-
-# --- Source 
-source $ZSH/oh-my-zsh.sh
-source $HOME/.functions
-source $HOME/.aliases
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH/custom/themes/spaceship.zsh-theme
-source <(kubectl completion zsh)
-
 
 # --- Exports
 export PATH="${PATH}:${HOME}/.krew/bin"
+export PATH="$PATH:/usr/local/opt/gitlab-runner/bin"
+export PATH="${PATH}:/Users/shashank.murthy/Library/Python/3.8/bin"
+
+GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)"
+
+for bindir in ${GNUBINS[@]}
+do
+    export PATH=$bindir:$PATH
+done
+
+export PATH
+
+# --- Symlinks
+
+ln -sf $(which python3) /usr/local/bin/python
+ln -sf "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
+ln -sf "/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
+# --- Plugins
+
+plugins=(git dnf kubectl history emoji encode64 jsontools history dirhistory copybuffer copyfile web-search sudo zsh-syntax-highlighting zsh-autosuggestions docker docker-compose autoswitch_virtualenv)
 
 
+# --- Source
+source $ZSH/oh-my-zsh.sh
+source $HOME/.functions
+source $HOME/.aliases
+source $HOME/.exports
+source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/custom/themes/spaceship.zsh-theme
+
+# --- Evals
+
+eval $(thefuck --alias)
+
+# --- Autocompletions
+source <(kubectl completion zsh)
+operator-sdk completion zsh > "${fpath[1]}/_operator-sdk"
+source <(helm completion zsh)
+source <(kubectl-argo-rollouts completion zsh)
+
+# -- GVM ---
 [[ -s "/Users/shashank.murthy/.gvm/scripts/gvm" ]] && source "/Users/shashank.murthy/.gvm/scripts/gvm"
+
+# -- Add private key to ssh forwarding agent and in keychain --
+
+ssh-add --apple-use-keychain  ~/.ssh/id_rsa
+
+gvm use go1.17.10

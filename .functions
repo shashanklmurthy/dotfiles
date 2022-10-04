@@ -1,0 +1,5 @@
+jump() {
+    declare -A hosts=( ["stage"]="" ["prod"]="")
+    echo "Jumping to host $1 @ ${hosts[$1]}"
+    ssh -A user@${hosts[$1]}
+}

@@ -28,8 +28,8 @@ brew install bash-completion2
 
 # Switch to using brew-installed bash as default shell
 if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
-  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
-  chsh -s "${BREW_PREFIX}/bin/bash";
+    echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells;
+    chsh -s "${BREW_PREFIX}/bin/bash";
 fi;
 
 # Install `wget` with IRI support.
@@ -96,6 +96,23 @@ brew install ssh-copy-id
 brew install tree
 brew install vbindiff
 brew install zopfli
+
+
+brew install docker-compose
+brew install kubernetes-cli
+brew install kustomize
+brew install kubectx, fzf
+brew cask meld
+brew install meld
+brew install terragrunt
+brew install tfenv
+brew install tgswitch
+brew install thefuck
+brew install helm
+brew install stern
+brew install mercurial
+brew install derailed/popeye/popeye
+brew install k9s
 
 # Remove outdated versions from the cellar.
 brew cleanup
