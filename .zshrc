@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -98,17 +105,19 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-ZSH_THEME="spaceship"
-SPACESHIP_CHAR_SYMBOL="❯❯"
-SPACESHIP_PACKAGE_SHOW=false
-SPACESHIP_BATTERY_SHOW='always'
+# ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+# SPACESHIP_CHAR_SYMBOL="❯❯"
+# SPACESHIP_PACKAGE_SHOW=false
+# SPACESHIP_BATTERY_SHOW='always'
 
 # --- Exports
 export PATH="${PATH}:${HOME}/.krew/bin"
-export PATH="$PATH:/usr/local/opt/gitlab-runner/bin"
-export PATH="${PATH}:/Users/shashank.murthy/Library/Python/3.8/bin"
+# export PATH="$PATH:/usr/local/opt/gitlab-runner/bin"
+# export PATH="${PATH}:/Users/shashank.murthy/Library/Python/3.8/bin"
 
-GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)"
+# GNUBINS="$(find /usr/local/opt -type d -follow -name gnubin -print)"
+GNUBINS="/usr/local/opt/libtool/libexec/gnubin /usr/local/opt/coreutils/libexec/gnubin /usr/local/opt/gnu-tar/libexec/gnubin /usr/local/opt/ed/libexec/gnubin /usr/local/opt/grep/libexec/gnubin /usr/local/opt/gnu-sed/libexec/gnubin /usr/local/opt/gsed/libexec/gnubin /usr/local/opt/gawk/libexec/gnubin /usr/local/opt/make/libexec/gnubin /usr/local/opt/findutils/libexec/gnubin"
 
 for bindir in ${GNUBINS[@]}
 do
@@ -123,17 +132,19 @@ ln -sf $(which python3) /usr/local/bin/python
 ln -sf "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
 ln -sf "/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
 # --- Plugins
-
-plugins=(git dnf kubectl history emoji encode64 jsontools history dirhistory copybuffer copyfile web-search sudo zsh-syntax-highlighting zsh-autosuggestions docker docker-compose autoswitch_virtualenv)
+plugins=(zsh-lazyload git dnf kubectl history emoji encode64 jsontools history dirhistory copybuffer copyfile web-search sudo zsh-syntax-highlighting zsh-autosuggestions docker docker-compose autoswitch_virtualenv)
 
 
 # --- Source
 source $ZSH/oh-my-zsh.sh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source $HOME/.functions
 source $HOME/.aliases
 source $HOME/.exports
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH/custom/themes/spaceship.zsh-theme
+# source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source $ZSH/custom/themes/spaceship.zsh-theme
 
 # --- Evals
 
@@ -146,10 +157,8 @@ source <(helm completion zsh)
 source <(kubectl-argo-rollouts completion zsh)
 
 # -- GVM ---
-[[ -s "/Users/shashank.murthy/.gvm/scripts/gvm" ]] && source "/Users/shashank.murthy/.gvm/scripts/gvm"
+[[ -s "/Users/shmurthy/.gvm/scripts/gvm" ]] && source "/Users/shmurthy/.gvm/scripts/gvm"
 
-# -- Add private key to ssh forwarding agent and in keychain --
+ssh-add &> /dev/null
 
-ssh-add --apple-use-keychain  ~/.ssh/id_rsa
-
-gvm use go1.17.10
+gvm use go1.17.10 &> /dev/null
