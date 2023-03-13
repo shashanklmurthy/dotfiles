@@ -128,9 +128,15 @@ export PATH
 
 # --- Symlinks
 
-ln -sf $(which python3) /usr/local/bin/python
-ln -sf "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/subl
-ln -sf "/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code" /usr/local/bin/code
+# Make bin folder at home
+mkdir -p $HOME/bin
+# Add folder to PATH
+export PATH="$HOME/bin:$PATH"
+
+
+ln -sf $(which python3) $HOME/bin/python
+ln -sf "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" $HOME/bin/subl
+ln -sf "/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code" $HOME/bin/code
 # --- Plugins
 plugins=(zsh-lazyload git dnf kubectl history emoji encode64 jsontools history dirhistory copybuffer copyfile web-search sudo zsh-syntax-highlighting zsh-autosuggestions docker docker-compose autoswitch_virtualenv)
 
