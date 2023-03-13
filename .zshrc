@@ -163,7 +163,7 @@ source <(helm completion zsh)
 source <(kubectl-argo-rollouts completion zsh)
 
 # -- GVM ---
-[[ -s "/Users/shmurthy/.gvm/scripts/gvm" ]] && source "/Users/shmurthy/.gvm/scripts/gvm"
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 ssh-add &> /dev/null
 
