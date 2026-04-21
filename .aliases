@@ -1,10 +1,283 @@
-alias ls="ls --color -l -h"
-alias grep="grep -n --color"
+# Personal shell aliases. Grouped by tool; keep this file tool-specific and
+# put sensitive / per-machine overrides in ~/.private.zsh.
+
+###############################################################################
+# Core shell
+###############################################################################
+alias ls="ls --color -lh"
+alias ll="ls --color -lah"
+alias la="ls --color -A"
+alias l.="ls -d .*"
+alias grep="grep --color=auto -n"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
 alias mkdir="mkdir -pv"
 alias ping="ping -c 5"
 alias HEAD="curl -I"
 alias cclear="clear && clear"
-alias kc="kubectl"
-alias kctx="kubectx"
+alias reload="exec zsh -l"
+
+# Quality-of-life — use bat as a better cat when available.
+command -v bat >/dev/null 2>&1 && alias cat="bat --paging=never"
+command -v bat >/dev/null 2>&1 && alias less="bat --paging=always"
+
+# tree with sensible defaults (ignore noisy dirs).
+alias t="tree -C -L 2 -I 'node_modules|.git|.venv|dist|build|.terraform|.next|target'"
+alias tt="tree -C -L 3 -I 'node_modules|.git|.venv|dist|build|.terraform|.next|target'"
+
+###############################################################################
+# Git (supplements the oh-my-zsh git plugin)
+###############################################################################
+alias gs="git status -sb"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gcm="git checkout main 2>/dev/null || git checkout master"
+alias gp="git pull --ff-only"
+alias gpu="git push"
+alias gpb='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
+alias gb="git branch"
+alias gba="git branch -a"
+alias gbd="git branch -d"
+alias gbD="git branch -D"
+alias gl="git log --oneline"
+alias glg="git log --oneline --graph --decorate"
+alias gla="git log --oneline --graph --decorate --all"
+alias gprune="git remote prune origin"
+alias gprunedry="git remote prune origin --dry-run"
+alias greset="git reset --hard HEAD"
+alias gunstage="git restore --staged"
+alias gstash="git stash"
+alias gstashp="git stash pop"
+
+###############################################################################
+# GitHub CLI
+###############################################################################
+alias ghpr="gh pr create --fill --web"
+alias ghprs="gh pr status"
+alias ghprv="gh pr view --web"
+alias ghprc="gh pr checkout"
+alias ghrun="gh run list"
+alias ghrunw="gh run watch"
+
+###############################################################################
+# kubectl
+###############################################################################
+# Note: oh-my-zsh's `kubectl` plugin already defines many shortcuts (k, kg*,
+# kd*, etc). These fill in the gaps most people still reach for.
+alias k="kubectl"
+alias kx="kubectx"
 alias kns="kubens"
-alias code="/Applications/Visual\ Studio\ Code.app/contents/Resources/app/bin/code"
+alias kctx="kubectx"
+
+alias kgp="kubectl get pods"
+alias kgpo="kubectl get pods -o wide"
+alias kgpw="kubectl get pods -w"
+alias kgd="kubectl get deployments"
+alias kgs="kubectl get services"
+alias kgn="kubectl get nodes -o wide"
+alias kgns="kubectl get namespaces"
+alias kgi="kubectl get ingress"
+alias kge="kubectl get events --sort-by=.lastTimestamp"
+alias kgpv="kubectl get pv"
+alias kgpvc="kubectl get pvc"
+alias kgall="kubectl get all"
+
+alias kd="kubectl describe"
+alias kdp="kubectl describe pod"
+alias kdd="kubectl describe deployment"
+alias kds="kubectl describe service"
+
+alias kl="kubectl logs"
+alias klf="kubectl logs -f"
+alias klp="kubectl logs --previous"
+
+alias kex="kubectl exec -it"
+alias kpf="kubectl port-forward"
+alias kaf="kubectl apply -f"
+alias kdel="kubectl delete"
+alias kdelf="kubectl delete -f"
+
+alias ktop="kubectl top"
+alias ktopp="kubectl top pods"
+alias ktopn="kubectl top nodes"
+
+alias kcfg="kubectl config"
+alias kcv="kubectl config view"
+alias kcuc="kubectl config use-context"
+alias kccc="kubectl config current-context"
+
+# stern — multi-pod log tailing.
+alias kt="stern"
+alias ktns="stern --all-namespaces"
+
+# k9s
+alias k9="k9s"
+
+###############################################################################
+# Helm
+###############################################################################
+alias h="helm"
+alias hls="helm list"
+alias hlsa="helm list --all-namespaces"
+alias hi="helm install"
+alias hu="helm upgrade"
+alias hui="helm upgrade --install"
+alias hun="helm uninstall"
+alias ht="helm template"
+alias hs="helm status"
+alias hrp="helm repo update"
+alias hhist="helm history"
+
+###############################################################################
+# Argo CD / Flux / GitOps
+###############################################################################
+alias acd="argocd"
+alias acdls="argocd app list"
+alias acdget="argocd app get"
+alias acdsync="argocd app sync"
+
+alias fx="flux"
+alias fxgk="flux get kustomizations"
+alias fxgh="flux get helmreleases"
+alias fxr="flux reconcile"
+
+###############################################################################
+# Docker / Compose
+###############################################################################
+alias d="docker"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias dimg="docker images"
+alias dex="docker exec -it"
+alias dlogs="docker logs -f"
+alias drm="docker rm"
+alias drmi="docker rmi"
+alias dstop="docker stop"
+alias dstart="docker start"
+alias dprune="docker system prune -f"
+alias dinspect="docker inspect"
+alias dtop="docker stats"
+
+alias dc="docker compose"
+alias dcu="docker compose up -d"
+alias dcd="docker compose down"
+alias dcl="docker compose logs -f"
+alias dcps="docker compose ps"
+alias dcb="docker compose build"
+alias dcr="docker compose restart"
+alias dcp="docker compose pull"
+
+# dive — inspect image layers interactively.
+alias ddive="dive"
+
+###############################################################################
+# Terraform / Terragrunt / OpenTofu
+###############################################################################
+alias tf="terraform"
+alias tfi="terraform init"
+alias tfp="terraform plan"
+alias tfa="terraform apply"
+alias tfaa="terraform apply -auto-approve"
+alias tfd="terraform destroy"
+alias tfda="terraform destroy -auto-approve"
+alias tff="terraform fmt -recursive"
+alias tfv="terraform validate"
+alias tfw="terraform workspace"
+alias tfo="terraform output"
+alias tfs="terraform state"
+alias tfl="terraform_landscape"
+
+alias tg="terragrunt"
+alias tgi="terragrunt init"
+alias tgp="terragrunt plan"
+alias tga="terragrunt apply"
+alias tgd="terragrunt destroy"
+alias tgra="terragrunt run-all"
+alias tgrap="terragrunt run-all plan"
+alias tgraa="terragrunt run-all apply"
+
+###############################################################################
+# AWS
+###############################################################################
+alias awsp="aws --profile"
+alias awswhoami="aws sts get-caller-identity"
+alias awsls="aws configure list-profiles"
+alias awsregion="aws configure get region"
+alias awslocal="aws --endpoint=http://localhost:4566"
+
+# Handy snippets from day-to-day AWS work.
+alias stacks="aws cloudformation list-stacks --output json --stack-status-filter CREATE_COMPLETE | jq -r '.StackSummaries[] | [.StackName, .StackStatus]'"
+alias ssocache="cat \$(ls -rt ~/.aws/sso/cache/*.json 2>/dev/null | tail -n 1) | jq 'del(.accessToken, .clientId, .clientSecret)'"
+
+export AWS_CLI_AUTO_PROMPT=on-partial
+
+###############################################################################
+# Serverless
+###############################################################################
+# AWS SAM CLI
+alias samb="sam build"
+alias samd="sam deploy --guided"
+alias saml="sam local start-api"
+alias samli="sam local invoke"
+alias samv="sam validate --lint"
+
+# Serverless Framework (install via `npm i -g serverless`).
+alias sls="serverless"
+alias slsd="serverless deploy"
+alias slsdf="serverless deploy function -f"
+alias slsinfo="serverless info"
+alias slsl="serverless logs -t -f"
+alias slsr="serverless remove"
+
+###############################################################################
+# Languages / package managers
+###############################################################################
+alias py="python3"
+alias pip="pip3"
+alias venv="python3 -m venv .venv && source .venv/bin/activate"
+alias activate="source .venv/bin/activate || source venv/bin/activate"
+
+# Node
+alias ni="npm install"
+alias nr="npm run"
+alias ns="npm start"
+alias nt="npm test"
+alias nb="npm run build"
+alias nrd="npm run dev"
+
+# Yarn
+alias y="yarn"
+alias ya="yarn add"
+alias yad="yarn add -D"
+alias yr="yarn run"
+alias yst="yarn start"
+
+# Homebrew
+alias brupd="brew update"
+alias brup="brew upgrade"
+alias brls="brew list"
+alias brcu="brew cleanup"
+alias brb="brew bundle --file=\"\$HOME/.dotfiles/Brewfile\""
+alias brbc="brew bundle check --file=\"\$HOME/.dotfiles/Brewfile\""
+
+###############################################################################
+# Editors
+###############################################################################
+alias v="vim"
+alias c="cursor"
+alias cc="code"
+
+# The legacy absolute path left around on old setups — keep as a fallback only
+# if no `code` CLI is on PATH.
+command -v code >/dev/null 2>&1 || \
+  alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
+
+###############################################################################
+# Misc
+###############################################################################
+alias cleanupDS="find . -type f -name '.DS_Store' -ls -delete"
+alias ports="lsof -iTCP -sTCP:LISTEN -n -P"
+alias myip="curl -s https://ifconfig.me && echo"
+alias localip="ipconfig getifaddr en0"
+alias weather="curl -s wttr.in"
+alias path='echo -e ${PATH//:/\\n}'
