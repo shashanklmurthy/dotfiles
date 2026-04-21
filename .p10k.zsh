@@ -1333,8 +1333,8 @@
   #     '*test*'  TEST
   #     '*'       DEFAULT)
   #
-  # If your current AWS profile is "company_test", its class is TEST
-  # because "company_test" doesn't match the pattern '*prod*' but does match '*test*'.
+  # If your current AWS profile is "staging-test", its class is TEST
+  # because "staging-test" doesn't match the pattern '*prod*' but does match '*test*'.
   #
   # You can define different colors, icons and content expansions for different classes:
   #

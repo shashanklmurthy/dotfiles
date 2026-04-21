@@ -181,3 +181,10 @@
 [init]
 
 	defaultBranch = main
+
+# Per-host / per-identity overrides. Anything in ~/.gitconfig.local wins over
+# the settings above, so it's the right place for a work email, a work
+# signingkey, corp proxy settings, etc. The file is NOT tracked by this repo.
+[include]
+
+	path = ~/.gitconfig.local
