@@ -180,6 +180,8 @@ brew "warrensbox/tap/tgswitch"    # Terragrunt version switcher
 brew "tflint"                     # Terraform linter
 brew "checkov"                    # IaC security / misconfig scanner
 brew "cfn-lint"                   # CloudFormation template linter
+brew "actionlint"                 # static checker for GitHub Actions workflow files
+brew "zizmor"                     # find security issues in GitHub Actions setups
 
 ###############################################################################
 # Security scanners (open source)
@@ -224,7 +226,7 @@ cask "visual-studio-code"         # VS Code editor
 cask "cursor"                     # Cursor — AI-first code editor
 cask "bruno"                      # API client (OSS alternative to Postman)
 cask "meld"                       # visual diff/merge tool
-cask "clipy"                      # clipboard manager
+cask "clipy"                      # Clipy — macOS clipboard extension (https://github.com/Clipy/Clipy)
 cask "rancher"                    # Rancher Desktop — container runtime + K8s
 cask "docker"                     # Docker Desktop (use Rancher OR Docker, not both)
 
